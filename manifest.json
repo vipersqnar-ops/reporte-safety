@@ -1,6 +1,6 @@
 {
-  "name": "Reporte de Seguridad Operacional",
-  "short_name": "Reporte SMS",
+  "name": "Safety Report",
+  "short_name": "Safety Report",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#1f3864",

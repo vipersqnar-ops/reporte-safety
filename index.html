@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reporte de Seguridad Operacional</title>
+<title>Safety Report</title>
 <meta name="theme-color" content="#1f3864">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Reporte SMS">
+<meta name="apple-mobile-web-app-title" content="Safety Report">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -49,176 +49,174 @@
 </head>
 <body>
 <header>
-  <h1 id="titulo"></h1>
-  <p>Reporte voluntario y no punitivo. La identificación es opcional. No reemplaza la notificación inmediata de accidentes/incidentes graves por la cadena de comando.</p>
+  <h1 id="title">Safety Report</h1>
+  <p>Voluntary, non-punitive reporting. Identification is optional. This does not replace immediate notification of mishaps or serious incidents through the chain of command.</p>
 </header>
 <main>
-<div class="load" id="load">Cargando…</div>
+<div class="load" id="load">Loading…</div>
 <form id="f" class="hidden" novalidate>
   <section class="card">
-    <h2>1. Evento</h2>
-    <label class="f req">Disciplina de seguridad</label>
+    <h2>1. Event</h2>
+    <label class="f req">Safety discipline</label>
     <div class="chips" id="disc"></div>
-    <div class="hint">Se sugiere según el área; podés cambiarla.</div>
-    <label class="f req">Tipo de reporte</label>
-    <div class="chips" id="tipo"></div>
-    <label class="f req" for="fecha">Fecha y hora del evento / detección</label>
-    <input type="datetime-local" id="fecha">
-    <label class="f req" for="lugar">Lugar</label>
-    <input type="text" id="lugar" maxlength="200" placeholder="Base, plataforma, hangar, área de vuelo, ruta…">
-    <label class="f req" for="area">Área</label>
+    <div class="hint">Suggested from the area; you can change it.</div>
+    <label class="f req">Report type</label>
+    <div class="chips" id="type"></div>
+    <label class="f req" for="date">Date and time of event / detection</label>
+    <input type="datetime-local" id="date">
+    <label class="f req" for="location">Location</label>
+    <input type="text" id="location" maxlength="200" placeholder="Base, ramp, hangar, airspace, route…">
+    <label class="f req" for="area">Area</label>
     <select id="area"></select>
-    <label class="f" for="aeronave">Aeronave / matrícula</label>
-    <input type="text" id="aeronave" maxlength="50">
-    <label class="f req" for="fase">Fase de vuelo / actividad</label>
-    <select id="fase"></select>
+    <label class="f" for="aircraft">Aircraft / tail number</label>
+    <input type="text" id="aircraft" maxlength="50">
+    <label class="f req" for="phase">Phase of flight / activity</label>
+    <select id="phase"></select>
   </section>
 
   <section class="card">
-    <h2>2. Descripción</h2>
-    <label class="f req" for="desc">Qué pasó / qué se observó</label>
+    <h2>2. Description</h2>
+    <label class="f req" for="desc">What happened / what was observed</label>
     <textarea id="desc" maxlength="5000"></textarea>
-    <div class="hint">Condiciones, secuencia de hechos. Evitá nombres de terceros.</div>
-    <label class="f" for="acciones">Acciones inmediatas tomadas</label>
-    <textarea id="acciones" maxlength="3000"></textarea>
-    <label class="f">Factores contribuyentes</label>
-    <div class="chips" id="factores"></div>
-    <label class="f" for="fotos">Fotos <span id="maxF"></span></label>
-    <input type="file" id="fotos" accept="image/*" multiple>
+    <div class="hint">Conditions and sequence of events. Avoid naming third parties.</div>
+    <label class="f" for="actions">Immediate actions taken</label>
+    <textarea id="actions" maxlength="3000"></textarea>
+    <label class="f">Contributing factors</label>
+    <div class="chips" id="factors"></div>
+    <label class="f" for="photos">Photos <span id="maxP"></span></label>
+    <input type="file" id="photos" accept="image/*" multiple>
     <div class="thumbs" id="thumbs"></div>
   </section>
 
   <section class="card">
-    <h2>3. Evaluación preliminar del riesgo</h2>
-    <div class="hint" id="riskHint">Tocá la celda que combina probabilidad (fila) y severidad (columna). La evaluación final la hace la oficina SMS.</div>
+    <h2>3. Preliminary risk assessment</h2>
+    <div class="hint" id="riskHint"></div>
     <div class="matrix" id="matrix"></div>
     <div class="risk" id="riskOut"></div>
-    <label class="f" for="mitig">Propuesta de mitigación</label>
+    <label class="f" for="mitig">Proposed mitigation</label>
     <textarea id="mitig" maxlength="3000"></textarea>
   </section>
 
   <section class="card">
-    <h2>4. Identificación (opcional)</h2>
-    <div class="chips" style="margin-top:10px"><label><input type="checkbox" id="ident"> Quiero identificarme para seguimiento</label></div>
+    <h2>4. Identification (optional)</h2>
+    <div class="chips" style="margin-top:10px"><label><input type="checkbox" id="ident"> I want to identify myself for follow-up</label></div>
     <div id="identBox" class="hidden">
-      <label class="f" for="nombre">Nombre y grado</label>
-      <input type="text" id="nombre" maxlength="100">
-      <label class="f" for="contacto">Contacto</label>
-      <input type="text" id="contacto" maxlength="100">
+      <label class="f" for="name">Name and rank</label>
+      <input type="text" id="name" maxlength="100">
+      <label class="f" for="contact">Contact</label>
+      <input type="text" id="contact" maxlength="100">
     </div>
   </section>
 
-  <button class="btn" id="send" type="submit">Enviar reporte</button>
+  <button class="btn" id="send" type="submit">Submit report</button>
   <div class="err" id="err" role="alert"></div>
 </form>
 
 <section class="card ok hidden" id="done">
-  <h2>Reporte recibido</h2>
+  <h2>Report received</h2>
   <div class="nro" id="nro"></div>
-  <p class="hint">Gracias por contribuir a la seguridad operacional.</p>
-  <button class="btn" id="nuevo" type="button">Nuevo reporte</button>
+  <p class="hint">Thank you for contributing to operational safety.</p>
+  <button class="btn" id="again" type="button">New report</button>
 </section>
 </main>
 
 <script>
-// URL de la implementación web de Apps Script (termina en /exec)
+// Apps Script web app URL (ends in /exec)
 const API = 'https://script.google.com/macros/s/AKfycbyK7lML8YnpZ8EQ2UWxzKNSoLTT8zCSAQzebF6ANShFhfQW9fC_mpVgBeocqeqwwEoj/exec';
 
-// credentials:'omit' => no se envían cookies de Google: evita el error con varias cuentas abiertas
+// credentials:'omit' => no Google cookies are sent: avoids the multiple-accounts error
 async function api(body) {
   const opt = { credentials: 'omit', redirect: 'follow' };
   if (body) Object.assign(opt, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(body) });
   const r = await fetch(API + (body ? '' : '?config=1'), opt);
   if (!r.ok) throw new Error('HTTP ' + r.status);
   const j = await r.json();
-  if (!j.ok) throw new Error(j.error || 'Error desconocido');
+  if (!j.ok) throw new Error(j.error || 'Unknown error');
   return j;
 }
 
 const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const RISK_HINT = 'Tap the cell that combines probability (row) and severity (column). The final assessment is made by the safety office.';
 let L, C;
 
-(async function cargar() {
+(async function load() {
   try {
     const j = await api();
-    L = j.listas; C = j.cfg;
-    iniciar();
+    L = j.lists; C = j.cfg;
+    init();
     $('load').classList.add('hidden'); $('f').classList.remove('hidden');
   } catch (e) {
-    $('load').innerHTML = 'No se pudo conectar con el servidor.<br><button class="btn" style="max-width:220px" onclick="location.reload()">Reintentar</button>';
+    $('load').innerHTML = 'Could not connect to the server.<br><button class="btn" style="max-width:220px" onclick="location.reload()">Retry</button>';
   }
 })();
 
-function iniciar() {
-const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const SUG = 'Sugerencia de mejora';
+function init() {
+  $('title').textContent = C.title + ' – ' + C.unit;
+  document.title = C.title;
+  $('maxP').textContent = '(max. ' + C.maxPhotos + ')';
+  $('riskHint').textContent = RISK_HINT;
 
-$('titulo').textContent = C.titulo + ' – ' + C.unidad;
-$('maxF').textContent = '(máx. ' + C.maxFotos + ')';
+  const chips = (el, arr, type, name) => {
+    $(el).innerHTML = arr.map(v => `<label><input type="${type}" name="${name}" value="${esc(v)}"> ${esc(v)}</label>`).join('');
+  };
+  const opts = (el, arr) => {
+    $(el).innerHTML = '<option value="">Select…</option>' + arr.map(v => `<option>${esc(v)}</option>`).join('');
+  };
+  const now = () => {
+    const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 16);
+  };
 
-function chips(el, arr, type, name) {
-  $(el).innerHTML = arr.map(v => `<label><input type="${type}" name="${name}" value="${esc(v)}"> ${esc(v)}</label>`).join('');
-}
-function opts(el, arr) {
-  $(el).innerHTML = '<option value="">Seleccionar…</option>' + arr.map(v => `<option>${esc(v)}</option>`).join('');
-}
-function ahora() {
-  const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-  return d.toISOString().slice(0, 16);
-}
-chips('disc', L.disciplinas, 'radio', 'disc');
-chips('tipo', L.tipos, 'radio', 'tipo');
+  chips('disc', L.disciplines, 'radio', 'disc');
+  chips('type', L.types, 'radio', 'type');
+  chips('factors', L.factors, 'checkbox', 'fac');
+  opts('area', L.areas);
+  opts('phase', L.phases);
+  $('date').value = now(); $('date').max = now();
 
-/* ---- Disciplina sugerida por área (si no fue elegida a mano) ---- */
-let discManual = false;
-$('disc').addEventListener('change', () => { discManual = true; });
-$('area').addEventListener('change', () => {
-  if (discManual || !$('area').value) return;
-  const cod = L.areaDisc[$('area').value] || 'OCC';
-  const op = L.disciplinas.find(x => x.slice(0, 3) === cod);
-  const el = document.querySelector(`input[name=disc][value="${op}"]`);
-  if (el) el.checked = true;
-});
-chips('factores', L.factores, 'checkbox', 'fac');
-opts('area', L.areas);
-opts('fase', L.fases);
-$('fecha').value = ahora();
-$('fecha').max = ahora();
-
-/* ---- Matriz de riesgo ---- */
-let P = '', S = '';
-const tol = i => C.intol.includes(i) ? 'INTOLERABLE' : C.acept.includes(i) ? 'ACEPTABLE' : 'TOLERABLE';
-function matriz() {
-  let h = '<div></div>' + L.sev.map(s => `<div class="h">${esc(s).replace(' - ', '<br>')}</div>`).join('');
-  [5, 4, 3, 2, 1].forEach(p => {
-    h += `<div class="h r">${esc(L.prob[5 - p]).replace(' - ', '<br>')}</div>`;
-    'ABCDE'.split('').forEach(s => {
-      const i = p + s;
-      h += `<button type="button" class="${tol(i)[0]}${(P + S) === i ? ' sel' : ''}" data-p="${p}" data-s="${s}" aria-label="Riesgo ${i} ${tol(i)}">${i}</button>`;
-    });
+  /* ---- Discipline suggested from area (unless chosen manually) ---- */
+  let discManual = false;
+  $('disc').addEventListener('change', () => { discManual = true; });
+  $('area').addEventListener('change', () => {
+    if (discManual || !$('area').value) return;
+    const code = L.areaDisc[$('area').value] || 'OCC';
+    const op = L.disciplines.find(x => x.slice(0, 3) === code);
+    const el = [...document.querySelectorAll('input[name=disc]')].find(x => x.value === op);
+    if (el) el.checked = true;
   });
-  $('matrix').innerHTML = h;
-  $('riskOut').textContent = P ? `Índice ${P}${S} – ${tol(P + S)}` : '';
-}
-$('matrix').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
-  if (P === b.dataset.p && S === b.dataset.s) { P = ''; S = ''; } else { P = b.dataset.p; S = b.dataset.s; }
-  matriz();
-});
-matriz();
 
-$('tipo').addEventListener('change', () => {
-  const t = (document.querySelector('input[name=tipo]:checked') || {}).value;
-  $('riskHint').textContent = t === SUG
-    ? 'Opcional para sugerencias de mejora.'
-    : 'Tocá la celda que combina probabilidad (fila) y severidad (columna). La evaluación final la hace la oficina SMS.';
-});
-$('ident').addEventListener('change', e => $('identBox').classList.toggle('hidden', !e.target.checked));
+  /* ---- Risk matrix ---- */
+  let P = '', S = '';
+  const tol = i => C.intol.includes(i) ? 'INTOLERABLE' : C.accept.includes(i) ? 'ACCEPTABLE' : 'TOLERABLE';
+  const matrix = () => {
+    let h = '<div></div>' + L.sev.map(s => `<div class="h">${esc(s).replace(' - ', '<br>')}</div>`).join('');
+    [5, 4, 3, 2, 1].forEach(p => {
+      h += `<div class="h r">${esc(L.prob[5 - p]).replace(' - ', '<br>')}</div>`;
+      'ABCDE'.split('').forEach(s => {
+        const i = p + s;
+        h += `<button type="button" class="${tol(i)[0]}${(P + S) === i ? ' sel' : ''}" data-p="${p}" data-s="${s}" aria-label="Risk ${i} ${tol(i)}">${i}</button>`;
+      });
+    });
+    $('matrix').innerHTML = h;
+    $('riskOut').textContent = P ? `Risk index ${P}${S} – ${tol(P + S)}` : '';
+  };
+  $('matrix').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (P === b.dataset.p && S === b.dataset.s) { P = ''; S = ''; } else { P = b.dataset.p; S = b.dataset.s; }
+    matrix();
+  });
+  matrix();
 
-/* ---- Fotos (se comprimen en el dispositivo) ---- */
-let fotos = [];
-function comprimir(file) {
-  return new Promise((res, rej) => {
+  $('type').addEventListener('change', () => {
+    const t = (document.querySelector('input[name=type]:checked') || {}).value;
+    $('riskHint').textContent = t === C.suggestion ? 'Optional for improvement suggestions.' : RISK_HINT;
+  });
+  $('ident').addEventListener('change', e => $('identBox').classList.toggle('hidden', !e.target.checked));
+
+  /* ---- Photos (compressed on the device) ---- */
+  let photos = [];
+  const compress = file => new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = () => {
       const img = new Image();
@@ -233,66 +231,65 @@ function comprimir(file) {
     };
     r.onerror = rej; r.readAsDataURL(file);
   });
-}
-$('fotos').addEventListener('change', async e => {
-  fotos = []; $('thumbs').innerHTML = ''; $('err').textContent = '';
-  const files = [...e.target.files];
-  if (files.length > C.maxFotos) $('err').textContent = `Se toman solo las primeras ${C.maxFotos} fotos.`;
-  for (const f of files.slice(0, C.maxFotos)) {
-    try {
-      const data = await comprimir(f);
-      fotos.push({ data });
-      const im = new Image(); im.src = 'data:image/jpeg;base64,' + data; im.alt = f.name;
-      $('thumbs').appendChild(im);
-    } catch (err) { $('err').textContent = 'No se pudo leer ' + f.name; }
-  }
-});
-
-/* ---- Envío ---- */
-$('f').addEventListener('submit', e => {
-  e.preventDefault();
-  $('err').textContent = '';
-  const tipo = (document.querySelector('input[name=tipo]:checked') || {}).value || '';
-  const ident = $('ident').checked;
-  const disc = (document.querySelector('input[name=disc]:checked') || {}).value || '';
-  const d = {
-    disc, tipo, fecha: $('fecha').value, lugar: $('lugar').value.trim(), area: $('area').value,
-    aeronave: $('aeronave').value.trim(), fase: $('fase').value, desc: $('desc').value.trim(),
-    acciones: $('acciones').value.trim(), mitig: $('mitig').value.trim(),
-    factores: [...document.querySelectorAll('input[name=fac]:checked')].map(x => x.value),
-    prob: P, sev: S,
-    nombre: ident ? $('nombre').value.trim() : '', contacto: ident ? $('contacto').value.trim() : '',
-    fotos
-  };
-  const faltan = [];
-  if (!d.disc) faltan.push('disciplina');
-  if (!d.tipo) faltan.push('tipo de reporte');
-  if (!d.fecha) faltan.push('fecha');
-  if (!d.lugar) faltan.push('lugar');
-  if (!d.area) faltan.push('área');
-  if (!d.fase) faltan.push('fase');
-  if (!d.desc) faltan.push('descripción');
-  if (d.tipo !== SUG && !(P && S)) faltan.push('evaluación de riesgo');
-  if (faltan.length) { $('err').textContent = 'Falta completar: ' + faltan.join(', ') + '.'; return; }
-
-  const b = $('send'); b.disabled = true; b.textContent = 'Enviando…';
-  api(d).then(r => {
-    $('nro').textContent = r.nro;
-    $('f').classList.add('hidden'); $('done').classList.remove('hidden');
-    window.scrollTo(0, 0);
-  }).catch(er => {
-    b.disabled = false; b.textContent = 'Enviar reporte';
-    $('err').textContent = 'Error al enviar: ' + er.message;
+  $('photos').addEventListener('change', async e => {
+    photos = []; $('thumbs').innerHTML = ''; $('err').textContent = '';
+    const files = [...e.target.files];
+    if (files.length > C.maxPhotos) $('err').textContent = `Only the first ${C.maxPhotos} photos will be used.`;
+    for (const f of files.slice(0, C.maxPhotos)) {
+      try {
+        const data = await compress(f);
+        photos.push({ data });
+        const im = new Image(); im.src = 'data:image/jpeg;base64,' + data; im.alt = f.name;
+        $('thumbs').appendChild(im);
+      } catch (err) { $('err').textContent = 'Could not read ' + f.name; }
+    }
   });
-});
 
-$('nuevo').addEventListener('click', () => {
-  $('f').reset(); fotos = []; discManual = false; $('thumbs').innerHTML = ''; P = ''; S = ''; matriz();
-  $('identBox').classList.add('hidden'); $('fecha').value = ahora(); $('fecha').max = ahora();
-  const b = $('send'); b.disabled = false; b.textContent = 'Enviar reporte';
-  $('done').classList.add('hidden'); $('f').classList.remove('hidden'); window.scrollTo(0, 0);
-});
-} // fin iniciar()
+  /* ---- Submit ---- */
+  $('f').addEventListener('submit', e => {
+    e.preventDefault();
+    $('err').textContent = '';
+    const val = n => (document.querySelector(`input[name=${n}]:checked`) || {}).value || '';
+    const ident = $('ident').checked;
+    const d = {
+      disc: val('disc'), type: val('type'), date: $('date').value, location: $('location').value.trim(),
+      area: $('area').value, aircraft: $('aircraft').value.trim(), phase: $('phase').value,
+      desc: $('desc').value.trim(), actions: $('actions').value.trim(), mitig: $('mitig').value.trim(),
+      factors: [...document.querySelectorAll('input[name=fac]:checked')].map(x => x.value),
+      prob: P, sev: S,
+      name: ident ? $('name').value.trim() : '', contact: ident ? $('contact').value.trim() : '',
+      photos
+    };
+    const missing = [];
+    if (!d.disc) missing.push('discipline');
+    if (!d.type) missing.push('report type');
+    if (!d.date) missing.push('date');
+    if (!d.location) missing.push('location');
+    if (!d.area) missing.push('area');
+    if (!d.phase) missing.push('phase');
+    if (!d.desc) missing.push('description');
+    if (d.type !== C.suggestion && !(P && S)) missing.push('risk assessment');
+    if (missing.length) { $('err').textContent = 'Please complete: ' + missing.join(', ') + '.'; return; }
+
+    const b = $('send'); b.disabled = true; b.textContent = 'Submitting…';
+    api(d).then(r => {
+      $('nro').textContent = r.nro;
+      $('f').classList.add('hidden'); $('done').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }).catch(er => {
+      b.disabled = false; b.textContent = 'Submit report';
+      $('err').textContent = 'Submission error: ' + er.message;
+    });
+  });
+
+  $('again').addEventListener('click', () => {
+    $('f').reset(); photos = []; discManual = false; $('thumbs').innerHTML = ''; P = ''; S = ''; matrix();
+    $('identBox').classList.add('hidden'); $('date').value = now(); $('date').max = now();
+    $('riskHint').textContent = RISK_HINT;
+    const b = $('send'); b.disabled = false; b.textContent = 'Submit report';
+    $('done').classList.add('hidden'); $('f').classList.remove('hidden'); window.scrollTo(0, 0);
+  });
+}
 </script>
 </body>
 </html>
